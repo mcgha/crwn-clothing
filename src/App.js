@@ -1,9 +1,10 @@
 import React from 'react';
-import { Route, Switch, Link } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 // swtich wraps route, route wraps
 import HomePage from './pages/homepage/homepage.component';
 import './App.css';
 import ShopPage from './pages/shop/shop.component';
+import Header from './components/header/header.component';
 
 // const HomePageNav = (props) => {
 
@@ -37,6 +38,8 @@ function App() {
   return (
     <div className="App">
       {/* <HomePage /> */}
+      {/* Header outside of the switch so it always appears regardless of navigation */}
+      <Header />
       <Switch>
         <Route exact path='/' component={HomePage} />
         <Route exact path='/shop' component={ShopPage} />
