@@ -1,9 +1,14 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
+//allows you access to history.push() and other parameters 
+//must export default withRouter(component);
 import './menu-item.styles.scss';
 
-const MenuItem = ({ title, imageUrl, size }) => (
+const MenuItem = ({ title, imageUrl, size, history, match, linkUrl }) => (
+    //can now pass history, match param because of withRouter
     <div 
-    className={`${size} menu-item`}>
+    className={`${size} menu-item`} 
+    onClick={() => history.push(`${match.url}${linkUrl}`)}>
         <div 
             className='background-image'
             style={{
@@ -17,4 +22,4 @@ const MenuItem = ({ title, imageUrl, size }) => (
             </div>
 );
 
-export default MenuItem;
+export default withRouter(MenuItem);
