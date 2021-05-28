@@ -6,7 +6,7 @@ import './App.css';
 import ShopPage from './pages/shop/shop.component';
 import Header from './components/header/header.component';
 import SignInAndSignUpPage from './components/sign-in-and-sign-up/sign-in-and-sign-up.component';
-import { auth } from './firebase/firebase.utils';
+import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
 // const HomePageNav = (props) => {
 
@@ -45,12 +45,26 @@ class App extends Component {
     }
   }
 
-  unsubscribefromAuth = null;
-
+  unsubscribeFromAuth = null;
+ 
   componentDidMount() {
-    this.unsubscribefromAuth = auth.onAuthStateChanged(user =>  {
-      this.setState({currentUser: user})
-    })
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth =>  {
+      // this.setState({currentUser: user})
+      // createUserProfileDocument(userAuth);
+      if (userAuth) {
+        const userRef = await createUserProfileDocument(userAuth);
+        
+        userRef.onSnapshot(snapShot => {
+          this.setState({
+            currentUser: {
+              id: snapShot.id,
+              ...snapShot.data()
+            }
+          });
+        });
+      }
+      this.setState({ currentUser: userAuth});
+    });
   }
 
   componentWillUnmount() {
