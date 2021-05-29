@@ -1,4 +1,4 @@
-import firebase from "firebase/app";
+import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 // npm i firebase
@@ -22,13 +22,13 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
     if(!snapShot.exists) {
         const { displayName, email } = userAuth;
         // destructuring userAuth object
-        const createAt = new Date();
+        const createdAt = new Date();
 
         try {
             await userRef.set({
                 displayName, 
                 email, 
-                createAt,
+                createdAt,
                 ...additionalData
             })
 

@@ -51,32 +51,36 @@ class App extends Component {
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth =>  {
       // this.setState({currentUser: user})
       // createUserProfileDocument(userAuth);
+      // console.log(userAuth);
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
         
         userRef.onSnapshot(snapShot => {
+          // console.log(snapShot.data());
           this.setState({
             currentUser: {
               id: snapShot.id,
               ...snapShot.data()
             }
           });
+          // console.log(this.state);
         });
       }
-      this.setState({ currentUser: userAuth});
+      this.setState({ currentUser: userAuth });
     });
   }
 
   componentWillUnmount() {
-    this.unsubscribefromAuth();
+    this.unsubscribeFromAuth();
   }
 
   render() {
+    const currentUser = this.state;
     return (
       <div className="App">
         {/* <HomePage /> */}
         {/* Header outside of the switch so it always appears regardless of navigation */}
-        <Header currentUser={this.state.user}/>
+        <Header currentUser={currentUser}/>
         <Switch>
           <Route exact path='/' component={HomePage} />
           <Route exact path='/shop' component={ShopPage} />

@@ -26,7 +26,12 @@ class SignUp extends Component {
         try {
             const { user } = await auth.createUserWithEmailAndPassword(email, password); 
             await createUserProfileDocument(user, {displayName});
-            this.setState();
+            this.setState({
+                displayName : '',
+                email: '',
+                password: '',
+                confirmPassword: ''
+            });
         } catch(error) {
             console.log(error);
         }
@@ -45,7 +50,7 @@ class SignUp extends Component {
             <div className='sign-up'>
                 <h2 className='title'> I do not have an account</h2>
                 <span>Sign up with your email and password</span>
-                <form className='sign-up-form'>
+                <form className='sign-up-form' onSubmit={this.handleSubmit}>
                     <FormInput
                         type='text'
                         name='displayName'

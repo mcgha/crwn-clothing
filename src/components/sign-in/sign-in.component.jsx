@@ -13,8 +13,8 @@ class SignIn extends Component {
             password: ''
         }
     }
-    handleSubmit = e => {
-        e.preventDefault();
+    handleSubmit = event => {
+        event.preventDefault();
 
         this.setState({ email: '', password: ''})
     }
@@ -26,6 +26,7 @@ class SignIn extends Component {
     }
 
     render() {
+        const { email, password } = this.state;
         return (
             <div className='sign-in'>
                 <h2>I already have and account</h2>
@@ -35,14 +36,14 @@ class SignIn extends Component {
                         name='email' 
                         type='email'
                         handleChange={this.handleChange} 
-                        value={this.state.email} 
+                        value={email} 
                         label='email'
                         required/>
                     <FormInput 
                         name='password' 
                         type='password' 
                         handleChange={this.handleChange} 
-                        value={this.state.password} 
+                        value={password} 
                         label='password'
                         required/>
                     <div className='buttons'>

@@ -14,14 +14,17 @@ const Header = ({ currentUser }) => (
             <Link className='option' to='/shop'>
                 Shop
             </Link>
+            <Link className='option' to='/contact'>
+                Contact
+            </Link>
             {
-                currentUser ?
-                <div className='option' onClick={() => auth.signOut()}> SIGN OUT </div> 
+                currentUser.currentUser ? 
+                <div className='option' onClick={() => auth.signOut()}> Sign out ({currentUser.currentUser.displayName})</div>   
                 :
-                <Link className='option' to='/signIn'> Sign In</Link>
+                <Link className='option' to='/signin'> Sign In</Link> 
             }
         </div>
     </div>
-)
+);
 
 export default Header;
