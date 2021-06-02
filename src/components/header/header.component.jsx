@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+//higher  order component, allows component to access reducers
 import { auth } from '../../firebase/firebase.utils';
 
 import { ReactComponent as Logo } from '../../assets/crown.svg';
@@ -18,13 +20,17 @@ const Header = ({ currentUser }) => (
                 Contact
             </Link>
             {
-                currentUser.currentUser ? 
-                <div className='option' onClick={() => auth.signOut()}> Sign out ({currentUser.currentUser.displayName})</div>   
+                currentUser ? 
+                <div className='option' onClick={() => auth.signOut()}> Sign out ({currentUser.displayName})</div>   
                 :
                 <Link className='option' to='/signin'> Sign In</Link> 
             }
         </div>
     </div>
 );
+//state from root reducer
+const mapStateToProps = state => ({
+    currentUser: state.user.currentUser
+})
 
-export default Header;
+export default connect(mapStateToProps)(Header);
