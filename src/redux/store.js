@@ -5,7 +5,11 @@ import logger from 'redux-logger';
 
 import rootReducer from './root-reducer';
 
-const middlewares = [logger];
+const middlewares = [];
+//remove loggers from build
+if (process.env.NODE_ENV === 'development') {
+    middlewares.push(logger);
+}
 
 const store = createStore(rootReducer, applyMiddleware(...middlewares));
 
