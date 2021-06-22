@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+// imported in header.styles
 import { connect } from 'react-redux';
 //higher  order component, allows component to access reducers
 import { createStructuredSelector } from 'reselect';
@@ -12,34 +13,34 @@ import { selectCurrentUser } from '../../redux/user/user.selector';
 
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 
-import './header.styles.scss';
+import { HeaderContainer, LogoContainer, OptionsContainer, OptionLink } from './header.styles';
 
 
 const Header = ({ currentUser, hidden }) => (
-    <div className='header'>
-        <Link className='logo-container' to='/'> 
+    <HeaderContainer>
+        <LogoContainer to='/'> 
             <Logo className='logo' />
-        </Link>
-        <div className='options'>
-            <Link className='option' to='/shop'>
+        </LogoContainer>
+        <OptionsContainer>
+            <OptionLink to='/shop'>
                 Shop
-            </Link>
+            </OptionLink>
             {/* <Link className='option' to='/contact'>
                 Contact
             </Link> */}
             {
                 currentUser ? 
-                <div className='option' onClick={() => auth.signOut()}> Sign out ({currentUser.displayName})</div>   
+                <OptionLink as='div' onClick={() => auth.signOut()}> Sign out ({currentUser.displayName})</OptionLink>   
                 :
-                <Link className='option' to='/signin'> Sign In</Link> 
+                <OptionLink to='/signin'> Sign In</OptionLink> 
             }
             <CartIcon />
-        </div>
+        </OptionsContainer>
         {
             hidden ? null : 
             <CartDropdown />
         }
-    </div>
+    </HeaderContainer>
 );
 //state from root reducer
 const mapStateToProps = createStructuredSelector({
