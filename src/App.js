@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 // switch wraps route
 import { connect } from 'react-redux'; 
@@ -21,48 +21,45 @@ import { selectCurrentUser } from './redux/user/user.selector';
 // used to create database
 import { checkUserSession } from './redux/user/user.actions';
 
-class App extends Component {
-  unsubscribeFromAuth = null;
- 
-  componentDidMount() {
-    const { checkUserSession } = this.props;
+const App = ({ checkUserSession, currentUser }) => {
+
+  useEffect(() => {
     checkUserSession();
+  }, [checkUserSession]);
+  //only run useEffect if checkUserSession has changed
+ 
+  // componentDidMount() {
+  //   checkUserSession();
 
-    // const { setCurrentUser, collectionsArray } = this.props;
-    // used to create database 
-      // addCollectionAndDocuments('collections', collectionsArray.map(({ title, items }) => ({ title, items })));
-      //call to add collections to firestore database, passing destructured vaules we want
-  }
-
-  componentWillUnmount() {
-    this.unsubscribeFromAuth();
-  }
-
-  render() {
-    // const currentUser = this.props;
-    return (
-      <div className="App">
-        {/* <HomePage /> */}
-        {/* Header outside of the switch so it always appears regardless of navigation */}
-        <Header/>
-        <Switch>
-          <Route exact path='/' component={HomePage} />
-          <Route path='/shop' component={ShopPage} />
-          <Route exact path='/checkout' component={CheckoutPage} />
-          <Route 
-            exact 
-            path='/signin' 
-            render={() => 
-            this.props.currentUser ? (
-            <Redirect to='/' />
-            ) : (<SignInAndSignUpPage />)
-            }
-            />
-        </Switch> 
-      </div>
-    );
-  }
+  //   // const { setCurrentUser, collectionsArray } = this.props;
+  //   // used to create database 
+  //     // addCollectionAndDocuments('collections', collectionsArray.map(({ title, items }) => ({ title, items })));
+  //     //call to add collections to firestore database, passing destructured vaules we want
+  // }
+  
+  return (
+    <div className="App">
+      {/* <HomePage /> */}
+      {/* Header outside of the switch so it always appears regardless of navigation */}
+      <Header/>
+      <Switch>
+        <Route exact path='/' component={HomePage} />
+        <Route path='/shop' component={ShopPage} />
+        <Route exact path='/checkout' component={CheckoutPage} />
+        <Route 
+          exact 
+          path='/signin' 
+          render={() => 
+          currentUser ? (
+          <Redirect to='/' />
+          ) : (<SignInAndSignUpPage />)
+          }
+          />
+      </Switch> 
+    </div>
+  );
 }
+
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
